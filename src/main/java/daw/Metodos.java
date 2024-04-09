@@ -55,7 +55,7 @@ public class Metodos {
  
         return lista.stream().filter(p->p.jubilado()==true&&p.genero().equalsIgnoreCase("non-binary"))
                 .map(Persona::email)
-                .collect(Collectors.toCollection(TreeSet::new));
+                .collect(Collectors.toSet());
     }
     
 //METODO Obtener el número de ciudades diferentes
@@ -153,8 +153,8 @@ public class Metodos {
         return media/lista.size();
     }
     
-    public static OptionalDouble mediaEdadesStream(List<Persona> lista){
-        return lista.stream().mapToDouble(Persona::calcularEdad).average();
+    public static double mediaEdadesStream(List<Persona> lista){
+        return lista.stream().mapToDouble(Persona::calcularEdad).average().getAsDouble();
     }
     
 //    Método para Obtener en un String todos los nombres de las personas concatenados.
@@ -166,7 +166,13 @@ public class Metodos {
         return concadenado.toString();
     }
     
+
+//    public static String todosLosNombresStream(List<Persona> lista){
+//        return lista.stream().map(Persona::nombre).collect(Collectors.joining(" "));
+//    }
+//      Se puede hacer con una operacion de reduccion - reduce
+    
     public static String todosLosNombresStream(List<Persona> lista){
-        return lista.stream().map(Persona::nombre).collect(Collectors.joining(" "));
+        return lista.stream().map(Persona::nombre).reduce(" ", (a,b)-> a.concat(b));
     }
 }
